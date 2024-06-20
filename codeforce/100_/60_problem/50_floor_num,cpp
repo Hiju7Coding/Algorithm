@@ -1,0 +1,12 @@
+#import<bits/stdc++.h>
+using namespace std;
+int n,t,x;
+main()
+{
+	for(cin>>t;t--;)
+	{
+		cin>>n>>x;
+		cout<<(n<3?1:(n-3)/x+2)<<endl;
+	}
+}
+//1426A

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/One Drive/code/OneDrive - coder7/Project/Dev C++/Algorithm/1_number/sang_snt",
+      "program": "c:/One Drive/code/OneDrive - coder7/Project/Dev C++/Algorithm/1_number/sang_snt/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
