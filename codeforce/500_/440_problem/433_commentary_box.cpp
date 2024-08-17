@@ -1,0 +1,9 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    long long int n,m,a,b;
+     cin>>n>>m>>a>>b;
+     cout<<min((n%m)*b,(m-(n%m))*a);
+}
+//990A
