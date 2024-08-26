@@ -13,13 +13,14 @@
 // constants
 #define INF 1e9
 #define DINT -1e9
-#define MOD 1000000007
+#define MOD 1e9+7
 // data types
 #define db double
 #define ll long long
 #define ull unsigned long long
 #define vll vector<ll>
 #define sll set<ll>
+#define us_ll unordered_set<ll>
 #define mll multiset<ll>
 #define qll queue<ll>
 #define lis_ll list<ll>
@@ -75,25 +76,29 @@
 #define output_d(a, x, n) for_d(i, x, n-1) cout << a[i] << ' ';
 #define output_n(a, n, m) for_i(i, 0, n-1) {output(a[i], m); cout << el;}
 /* ------------------ problem ------------------
-MEX của một dãy là số nguyên không âm nhỏ nhất không xuất hiện trong dãy đó. ví dụ, MEX của dãy {0, 1, 3, 4} là 2.
-Yêu cầu: cho 2 số nguyên n,m. Hãy tìm MEX của dãy n XOR 0, n XOR 1, n XOR 2, ..., n XOR m.
-1 <= t <= 30000 (số lượng test)
-0 <= n <= 10^9
+ rất mê cái đẹp, anh ta không những mê gái mà còn mê cả xâu. Một xâu 
+ cho là đẹp nếu nó tồn tại một cách sắp xếp sao cho xâu đó là một palindrome. Một hôm một người bạn của anh ta đưa cho anh một xâu 
+, và với tính tò mò của mình, 
+ đã dành hàng tiếng để đếm số xâu con 
+ 
+ của xâu 
+ sao cho nó là một xâu đẹp. Nhưng vì xâu 
+ quá dài nên 
+ đang cần bạn giúp!
+Một xâu palindrome được định nghĩa là xâu khi đọc từ trái sang phải và ngược lại đều có kết quả như nhau.
+Input
+Dòng đầu gồm một số nguyên 
+ là chiều dài của xâu 
+Dòng thứ hai là xâu 
+ có chiều dài 
+ chỉ gồm các ký tự từ 
+ viết thường và các số thuộc 
+Output
+In ra một số duy nhất là số xâu con đẹp trong xâu 
 */
 // link: 
 /* ----------------- test case -----------------
-input
-1 4 5
-output
-2
-giải thích:
-4 là 100
-100 Xor 000 = 100 = 4
-100 Xor 001 = 101 = 5
-100 Xor 010 = 110 = 6
-100 Xor 011 = 111 = 7
-100 Xor 100 = 000 = 0
-MEX của dãy là 2
+
 */
 using namespace std;
 /*
@@ -108,8 +113,6 @@ ofstream cout("GARBOT.OUT");
 // solve
 void solve(){
     // name variables
-    ll t, n, m;in_n(t);in_ab(n, m);
-    
 }
 // main
 int main() {
