@@ -118,15 +118,20 @@ ofstream cout("GARBOT.OUT");
 #define maxN 1000005 //10^6+5
 const ll MOD = 1e9 + 7;
 // init variables
-ll dp[maxN];
+ll dp[maxN][2];
 // function
+ll product(ll x, ll y) {
+	return ((x%MOD) * (y%MOD))%MOD;
+}
+ll sum(ll x, ll y) {
+	return (x%MOD + y%MOD)%MOD;
+}
 void pre(){
-    dp[1] = 2;
-    dp[2] = 8;
-    dp[3] = 34;
-    for_i(i, 3, maxN){
-        dp[i] = (4 * dp[i-1] - 2 * dp[i-2] + dp[i-3])%MOD;
-    }
+    dp[1][1] = dp[1][0] = 1;
+    for (int i = 2; i <= maxN; ++i) {
+		dp[i][0] = sum(product(4, dp[i-1][0]), dp[i-1][1]);
+		dp[i][1] = sum(product(2, dp[i-1][1]), dp[i-1][0]);
+	}
 }
 // solve
 void solve(){
@@ -135,7 +140,7 @@ void solve(){
     pre();
     while (t--) {
         ll n;in_n(n)
-        cout << dp[n] << el;
+        cout << sum(dp[n][0], dp[n][1]) << el;
     }
 }
 // main
