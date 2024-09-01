@@ -115,24 +115,27 @@ void solve(){
     for_i(i, 0, n-1) {
         in_ab(a[i].fi, a[i].se);
     }
-    sort(all(a), [](const pll& a, const pll& b) {
-        return a.se < b.se;
-    });
-    priority_queue<ll, vll, greater<ll>> pq;
+    sort(all(a));
+    
     ll res = 0;
-    for (const auto& hm : a) {
-        ll arr = hm.fi;
-        ll dep = hm.se;
-        if (sz(pq) < k) {
-            pq.push(dep);
+    multiset<ll> end_times;
+    
+    for (const auto& [start, end] : a) {
+        if (end_times.size() < k) {
+            end_times.insert(end);
             res++;
-        } else if (pq.top() <= arr) {
-            pq.pop();
-            pq.push(dep);
-            res++;
+        } else {
+            auto it = end_times.upper_bound(start);
+            if (it != end_times.begin()) {
+                end_times.erase(--it);
+                end_times.insert(end);
+                res++;
+            }
         }
     }
+    
     out_n(res);
+    
 }
 // main
 int main() {
