@@ -69,9 +69,9 @@ void solve(){
     ll mx = DINT;
     deq dq;
     for_i(i, 0, n-1){
-        while(!dq.emp() && dq.fr() < i-k) dq.pof();
-        if(!dq.emp()) mx = max(mx, a[dq.fr()] - a[i]);
-        while(!dq.emp() && a[dq.bk()] <= a[i]) dq.pob();
+        while(!dq.emp() && dq.fr() < i-k) dq.pof(); // loai bo cac phan tu khong thuoc khoang k
+        if(!dq.emp()) mx = max(mx, a[dq.fr()] - a[i]); // tinh max
+        while(!dq.emp() && a[dq.bk()] <= a[i]) dq.pob(); // loai bo cac phan tu nho hon a[i]
         dq.pb(i);
     }
     out_n(mx);

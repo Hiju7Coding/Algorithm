@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
 /*
 #include <fstream>
 #include <vector>
@@ -76,28 +77,36 @@
 #define output_d(a, x, n) for_d(i, x, n-1) cout << a[i] << ' ';
 #define output_n(a, n, m) for_i(i, 0, n-1) {output(a[i], m); cout << el;}
 /* ------------------ problem ------------------
-Cho bạn n đoạn số nguyên liên tiếp có dạng [a,b] (b >= a). Nhiệm vụ của bạn là xác định xem đoạn [a,b] có chứa hoặc bị chứa bởi đoạn nào khác hay không.
-Lưu ý: Đoạn [a,b] được gọi là chứa đoạn [c,d] nếu a <= c và b >= d.
-Input: 
-- Dòng 1: số nguyên dương n ( n <= 2.105).
-- N dòng tiếp theo là các cặp số nguyên dương a, b đại diện cho đoạn [a,b]
-Lưu ý: Không có đoạn [a,b] nào xuất hiện 2 lần trong Input.
-Output:
-Đầu tiên, in ra một dòng mô tả cho mỗi đoạn (theo thứ tự đầu vào) số lượng đoạn con mà đoạn đó chứa.
-Sau đó, in ra một dòng mô tả cho mỗi đoạn (theo thứ tự đầu vào) số lượng các đoạn có chứa đoạn đó.
-*/
-/* ----------------- test case -----------------
+You are given a list consisting of n integers. Your task is to remove elements from the list at given positions, and report the removed elements.
 Input
-4
-1 6
-2 4
-4 8
-3 6
+The first input line has an integer n: the initial size of the list. During the process, the elements are numbered 1,2,\dots,k where k is the current size of the list.
+The second line has n integers x_1,x_2,\dots,x_n: the contents of the list.
+The last line has n integers p_1,p_2,\dots,p_n: the positions of the elements to be removed.
 Output
-2 0 0 0
-0 1 0 1
+Print the elements in the order they are removed.
+
+1 \le n \le 2 \cdot 10^5
+1 \le x_i \le 10^9
+1 \le p_i \le n-i+1
+*/
+// link: https://cses.fi/problemset/task/1749
+/* ----------------- test case -----------------
+Input:
+5
+2 6 1 4 2
+3 1 3 1 1
+
+Output:
+1 2 2 6 4
+
+Explanation: The contents of the list are [2,6,1,4,2], [2,6,4,2], [6,4,2], [6,4], [4] and [].
+*/
+/* ------------------- code --------------------
+
 */
 using namespace std;
+using namespace __gnu_pbds;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> indexed_set;
 /*
 ifstream cin("GARBOT.INP");
 ofstream cout("GARBOT.OUT");
@@ -114,47 +123,35 @@ struct node{
 ll n, m=0;
 ll st[maxN<<2];
 node a[maxN], res[maxN];
-set<ll>se;
-unordered_map<ll,ll> mpx;
 // function
 void update(ll id, ll l, ll r, ll pos){ // update giá trị của st[id] tại vị trí pos
-    if(pos<l || pos>r) return; // nếu pos không nằm trong khoảng l-r thì return
-    if(l==r) return st[id]++, void(); // trả về giá trị của st[id] sau khi tăng 1
-    ll m=(l+r)>>1; // m=(l+r)/2
-    update(id<<1,l,m,pos); // update bên trái
-    update(id<<1|1,m+1,r,pos); // update bên phải
-    st[id]=st[id<<1]+st[id<<1|1]; // cập nhật giá trị của st[id]
+    if(pos<l || pos>r) return; 
+    if(l==r) return st[id]++, void(); 
+    ll m=(l+r)>>1; 
+    update(id<<1,l,m,pos); 
+    update(id<<1|1,m+1,r,pos); 
+    st[id]=st[id<<1]+st[id<<1|1]; 
 }
-ll get(ll id, ll l, ll r, ll u, ll v){ // lấy giá trị của st[id] trong khoảng u-v
-    if(v<l || u>r) return 0; 
-    if(u<=l && r<=v) return st[id];
+ll get(ll id, ll l, ll r, ll pos){ // 
+    if(l==r) return l;
     ll m=(l+r)>>1;
-    return get(id<<1,l,m,u,v)+get(id<<1|1,m+1,r,u,v);
+    if(st[id<<1]>=pos) return get(id<<1,l,m,pos);
+    return get(id<<1|1,m+1,r,pos-st[id<<1]);
 }
 // solve
 void solve(){
     // name variables
-    cin >> n;
+    ll n;in_n(n)
+    ll a[n], b[n];
+    ina_n(a, n)
+    ina_n(b, n)
+    // segment tree
+    for_i(i, 1, n) update(1, 1, n, i);
     for_i(i, 0, n-1){
-        cin >> a[i].l >> a[i].r;
-        a[i].indx=i;
-        se.insert(a[i].r);
+        ll x = get(1, 1, n, b[i]);
+        cout << a[x-1] << ' ';
+        update(1, 1, n, x); // remove element
     }
-    for(auto &x:se) mpx[x]=++m;
-    sort(a,a+n);
-    for_d(i,n-1,0){
-        ll x=mpx[a[i].r];
-        res[a[i].indx].l=get(1,1,m,1,x);
-        update(1,1,m,x);
-    }
-    memset(st,0,sizeof(st));
-    for_i(i,0,n-1){
-        ll x=mpx[a[i].r];
-        res[a[i].indx].r=get(1,1,m,x,m);
-        update(1,1,m,x);
-    }
-    for_i(i,0,n-1) cout << res[i].l << ' '; el;
-    for_i(i,0,n-1) cout << res[i].r << ' '; el;
 }
 // main
 int main() {

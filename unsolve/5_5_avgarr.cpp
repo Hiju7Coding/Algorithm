@@ -60,11 +60,17 @@
 using namespace std;
 //#define maxN 100005 //10^5
 // init variables
-
+map<ll, ll> mp;
 // function
-
 // solve
 void solve(){
+    ll n, k;in_ab(n, k);
+    vec a(n);ina_n(a, n);
+    ll b[n];
+    for_i(i, 0, n-1) b[i] = a[i]-k;
+    ll prf[n];
+    for(prf[0] = b[0], i = 1; i < n; i++) prf[i] = prf[i-1] + b[i];
+    for_i(i, 0, n-1) mp[prf[i]] = 1;
     
 }
 int main() {
